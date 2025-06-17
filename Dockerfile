@@ -4,14 +4,7 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /app
 
-# Install Node.js and npm
-RUN apt-get update && \
-    apt-get install -y curl gnupg && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs && \
-    npm -v && node -v
-
-# Install Python dependencies
+# Copy and install backend dependencies
 COPY server/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -20,18 +13,17 @@ COPY . .
 
 # Build React frontend
 WORKDIR /app/client
-RUN npm install && npm run build
+RUN apt-get update && apt-get install -y nodejs npm
+RUN npm install
+RUN npm run build
 
-# ✅ Check that build succeeded (for debugging)
-RUN ls -la build
-
-# Move frontend build into Flask's static directory
+# Move frontend build into Flask static directory
 WORKDIR /app
-RUN mkdir -p server/build && cp -r client/build/* server/build/
+RUN mkdir -p server/static && cp -r client/build/* server/static/
 
 # Expose Flask port
 EXPOSE 5000
 
-# Run Flask app
+# Start Flask backend
 WORKDIR /app/server
 CMD ["python", "app.py"]

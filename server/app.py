@@ -1,12 +1,16 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, send_from_directory, request, jsonify
 from flask_cors import CORS
-import numpy as np
-import cv2
 import os
+import cv2
+import numpy as np
 from face_detector import detect_age_gender
 
-app = Flask(__name__, static_folder='build', static_url_path='/')
+app = Flask(__name__, static_folder='static', static_url_path='')
 CORS(app)
+
+@app.route('/')
+def index():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/detect', methods=['POST'])
 def detect():
@@ -15,19 +19,16 @@ def detect():
     file = request.files['image']
     npimg = np.frombuffer(file.read(), np.uint8)
     img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
-
     result_img_base64, detections = detect_age_gender(img)
     return jsonify({'image': result_img_base64, 'detections': detections})
 
-@app.route('/', defaults={'path': ''})
+# Serve other static files
 @app.route('/<path:path>')
-def serve_react(path):
-    if path and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    return send_from_directory(app.static_folder, 'index.html')
+def static_proxy(path):
+    return send_from_directory(app.static_folder, path)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
 
 
