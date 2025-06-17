@@ -1,0 +1,39 @@
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === React Build ===
+client/build/
+dist/
+dist-ssr/
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+.env
+server/build/
+
+# === Logs ===
+logs/
+*.log
+
+# === System Files ===
+.DS_Store
+Thumbs.db
+
+# === Editors ===
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,0 +1,18 @@
+# Node modules
+client/node_modules/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.env
+
+# Build outputs
+client/build/
+server/build/
+
+# OS/System files
+.DS_Store
+Thumbs.db
