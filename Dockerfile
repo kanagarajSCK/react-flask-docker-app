@@ -20,8 +20,10 @@ COPY . .
 
 # Build React frontend
 WORKDIR /app/client
-RUN npm install
-RUN npm run build
+RUN npm install && npm run build
+
+# ✅ Check that build succeeded (for debugging)
+RUN ls -la build
 
 # Move frontend build into Flask's static directory
 WORKDIR /app
