@@ -46,7 +46,7 @@ const UploadForm = () => {
     formData.append('image', resizedFile)
 
     try {
-      const res = await axios.post('http://localhost:5000/detect', formData)
+      const res = await axios.post('https://flask-backend-ygul.onrender.com/detect', formData)
       setResultImage(`data:image/jpeg;base64,${res.data.image}`)
     } catch (error) {
       alert('❌ Detection failed. Try another image.')
