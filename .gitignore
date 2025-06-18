@@ -1,19 +1,24 @@
-# Node modules
-client/node_modules/
+# Node.js
+node_modules/
+dist/
+build/
 
-# Python bytecode
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.env
 
-# Virtual environments
-venv/
-.env
-
-# Build outputs
-client/build/
-server/build/
-
-# OS/System files
+# macOS/Linux/Windows junk
 .DS_Store
 Thumbs.db
 
+# Docker
+*.log
+
+# VS Code settings
+.vscode/
+
+# Environment
+.env
